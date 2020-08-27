@@ -7,8 +7,10 @@ let cachedToken
 
 exports.handler = async (event, context) => {
   const body = JSON.parse(event.body);
+  let usedCache = true
   if(!cachedToken){
     cachedToken = await getAuthToken();
+    usedCache = false
   }
 
   try {
@@ -29,6 +31,7 @@ exports.handler = async (event, context) => {
   } catch (e) {
     return {
       statusCode: 400,
+      usedCache: usedCache,
       body: JSON.stringify(e)
     }
   }
