@@ -24,6 +24,7 @@ exports.handler = async (event, context) => {
         columns: body.columns
       })
     }).then(res => res.json());
+    response.usedCache = usedCache;
     return {
       statusCode: 200,
       body: JSON.stringify(response)
@@ -31,7 +32,6 @@ exports.handler = async (event, context) => {
   } catch (e) {
     return {
       statusCode: 400,
-      usedCache: usedCache,
       body: JSON.stringify(e)
     }
   }
